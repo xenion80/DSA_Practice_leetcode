@@ -1,26 +1,26 @@
 class Solution {
     public boolean isHappy(int n) {
-        int fast=n;
-        int slow=n;
-        do{
-            slow=squareno(slow);
-            fast=squareno(squareno(fast));
+        int slow=n,fast=n;
+        while(fast!=1){
+            slow=fun(slow);
+            fast=fun(fun(fast));
+            if(slow==fast && slow!=1)return false;
 
-        }while(slow!=fast);
-        if(slow==1){
-            return true;
         }
-        return false;
-
+        return true;
+       
+        
         
     }
-    private int squareno(int n){
-        int ans=0;
-        while(n>0){
-            int rem=n%10;
-            ans+=rem*rem;
+     private int fun(int n){
+        int sum=0;
+        while( n>0){
+            int d=n%10;
             n=n/10;
+            sum=sum+d*d;
+            
         }
-        return ans;
+        return sum;
     }
+    
 }
