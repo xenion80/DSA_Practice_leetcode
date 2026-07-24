@@ -1,24 +1,33 @@
 class Solution {
     public int uniqueXorTriplets(int[] nums) {
+        int n = nums.length;
 
-        boolean[][] dp = new boolean[4][2048];
-        dp[0][0] = true;
+        int[] pairXor = new int[2048];
+        int[] tripleXor = new int[2048];
 
-        for (int taken = 0; taken < 3; taken++) {
-            for (int xor = 0; xor < 2048; xor++) {
-                if (!dp[taken][xor]) continue;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                pairXor[nums[i] ^ nums[j]] = 1;
+            }
+        }
 
-                for (int value : nums) {
-                    dp[taken + 1][xor ^ value] = true;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 2048; j++) {
+                if (pairXor[j] == 1) {
+                    tripleXor[j ^ nums[i]] = 1;
                 }
             }
         }
 
-        int ans = 0;
-        for (boolean b : dp[3]) {
-            if (b) ans++;
+        
+        int cnt = 0;
+        for (int value : tripleXor) {
+            if (value == 1) {
+                cnt++;
+            }
         }
 
-        return ans;
+        return cnt;
     }
 }
